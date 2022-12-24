@@ -1,4 +1,4 @@
-import Tool from "./tool"
+import Tool from "./Tool"
 
 export default class Brush extends Tool {
     mouseDown = false
@@ -31,7 +31,6 @@ export default class Brush extends Tool {
     }
 
     draw(x: number, y: number) {
-        this.ctx!.strokeStyle = "black"
         this.ctx?.lineTo(x, y)
         this.ctx?.stroke()
     }

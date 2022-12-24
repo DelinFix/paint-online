@@ -8,6 +8,12 @@ import Line from "../tools/Line"
 import Rect from "../tools/Rect"
 
 const Toolbar = () => {
+    const changeColor = (e: React.ChangeEvent<HTMLInputElement>) => {
+        console.log(e.target.value)
+        toolState.setStrokeColor(e.target.value)
+        toolState.setFillColor(e.target.value)
+    }
+
     return (
         <div className="toolbar">
             <button
@@ -34,9 +40,19 @@ const Toolbar = () => {
                 className="toolbar__btn line"
                 onClick={() => toolState.setTool(new Line(canvasState.canvas))}
             />
-            <input type="color" className="color-input" />
-            <button className="toolbar__btn undo" />
-            <button className="toolbar__btn redo" />
+            <input
+                onChange={changeColor}
+                type="color"
+                className="color-input"
+            />
+            <button
+                className="toolbar__btn undo"
+                onClick={() => canvasState.undo()}
+            />
+            <button
+                className="toolbar__btn redo"
+                onClick={() => canvasState.redo()}
+            />
             <button className="toolbar__btn save" />
         </div>
     )

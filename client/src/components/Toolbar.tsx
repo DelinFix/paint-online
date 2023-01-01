@@ -9,7 +9,6 @@ import Rect from "../tools/Rect"
 
 const Toolbar = () => {
     const changeColor = (e: React.ChangeEvent<HTMLInputElement>) => {
-        console.log(e.target.value)
         toolState.setStrokeColor(e.target.value)
         toolState.setFillColor(e.target.value)
     }

@@ -6,8 +6,8 @@ export default class Line extends Brush {
     currentY = 0
     saved = ""
 
-    constructor(canvas: HTMLCanvasElement) {
-        super(canvas)
+    constructor(canvas: HTMLCanvasElement, socket: WebSocket, id: string) {
+        super(canvas, socket, id)
     }
 
     mouseDownHandler(e: MouseEvent) {

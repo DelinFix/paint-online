@@ -1,13 +1,15 @@
-import Tool from "./tool"
+import Tool from "./Tool"
 
 export default class Rect extends Tool {
     mouseDown = false
     startX = 0
     startY = 0
     saved = ""
+    width = 0
+    height = 0
 
-    constructor(canvas: HTMLCanvasElement) {
-        super(canvas)
+    constructor(canvas: HTMLCanvasElement, socket: WebSocket, id: string) {
+        super(canvas, socket, id)
         this.listen()
     }
 
@@ -17,8 +19,21 @@ export default class Rect extends Tool {
         this.canvas.onmouseup = this.mouseUpHandler.bind(this)
     }
 
-    mouseUpHandler(e: MouseEvent) {
+    mouseUpHandler() {
         this.mouseDown = false
+        this.socket.send(
+            JSON.stringify({
+                method: "draw",
+                id: this.id,
+                figure: {
+                    type: "rect",
+                    x: this.startX,
+                    y: this.startY,
+                    width: this.width,
+                    height: this.height,
+                },
+            })
+        )
     }
 
     mouseDownHandler(e: MouseEvent) {
@@ -33,9 +48,22 @@ export default class Rect extends Tool {
         if (this.mouseDown) {
             let currentX = e.offsetX
             let currentY = e.offsetY
-            let width = currentX - this.startX
-            let height = currentY - this.startY
-            this.draw(this.startX, this.startY, width, height)
+            this.width = currentX - this.startX
+            this.height = currentY - this.startY
+            // this.draw(this.startX, this.startY, width, height)
+            this.socket.send(
+                JSON.stringify({
+                    method: "draw",
+                    id: this.id,
+                    figure: {
+                        type: "rect",
+                        x: currentX,
+                        y: currentX,
+                        width: this.width,
+                        height: this.height,
+                    },
+                })
+            )
         }
     }
 
@@ -59,5 +87,18 @@ export default class Rect extends Tool {
         this.ctx?.rect(x, y, w, h)
         this.ctx?.fill()
         this.ctx?.stroke()
+    }
+
+    static staticDraw(
+        ctx: CanvasRenderingContext2D,
+        x: number,
+        y: number,
+        w: number,
+        h: number
+    ) {
+        ctx?.beginPath()
+        ctx?.rect(x, y, w, h)
+        ctx?.fill()
+        ctx?.stroke()
     }
 }

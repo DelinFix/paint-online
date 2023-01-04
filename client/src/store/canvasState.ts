@@ -2,6 +2,8 @@ import { makeAutoObservable } from "mobx"
 
 class CanvasState {
     canvas = null as unknown as HTMLCanvasElement
+    socket = null as unknown as WebSocket
+    sessionId = null as unknown as string
     undoList: string[] = []
     redoList: string[] = []
     username = ""
@@ -12,6 +14,14 @@ class CanvasState {
 
     setUsername = (name: string) => {
         this.username = name
+    }
+
+    setSocket = (socket: WebSocket) => {
+        this.socket = socket
+    }
+
+    setSessionId = (id: string = "") => {
+        this.sessionId = id
     }
 
     setCanavas(canvas: HTMLCanvasElement) {

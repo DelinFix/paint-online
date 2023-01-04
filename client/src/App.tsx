@@ -1,3 +1,5 @@
+import { Navigate, Route, Routes } from "react-router"
+import { BrowserRouter } from "react-router-dom"
 import Canvas from "./components/Canvas"
 import SettingBar from "./components/SettingBar"
 import Toolbar from "./components/Toolbar"
@@ -5,11 +7,36 @@ import "./styles/app.scss"
 
 const App = () => {
     return (
-        <div className="app">
-            <Toolbar />
-            <SettingBar />
-            <Canvas />
-        </div>
+        <BrowserRouter>
+            <div className="app">
+                <Routes>
+                    <Route
+                        path="/:id"
+                        element={
+                            <>
+                                <Toolbar />
+                                <SettingBar />
+                                <Canvas />
+                            </>
+                        }
+                    />
+                    <Route
+                        path="/"
+                        element={
+                            <>
+                                <Toolbar />
+                                <SettingBar />
+                                <Canvas />
+                                <Navigate
+                                    to={`/f${(+new Date()).toString(16)}`}
+                                    replace
+                                />
+                            </>
+                        }
+                    />
+                </Routes>
+            </div>
+        </BrowserRouter>
     )
 }
 

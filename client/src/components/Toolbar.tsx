@@ -17,11 +17,27 @@ const Toolbar = () => {
         <div className="toolbar">
             <button
                 className="toolbar__btn brush"
-                onClick={() => toolState.setTool(new Brush(canvasState.canvas))}
+                onClick={() =>
+                    toolState.setTool(
+                        new Brush(
+                            canvasState.canvas,
+                            canvasState.socket,
+                            canvasState.sessionId
+                        )
+                    )
+                }
             />
             <button
                 className="toolbar__btn rect"
-                onClick={() => toolState.setTool(new Rect(canvasState.canvas))}
+                onClick={() =>
+                    toolState.setTool(
+                        new Rect(
+                            canvasState.canvas,
+                            canvasState.socket,
+                            canvasState.sessionId
+                        )
+                    )
+                }
             />
             <button
                 className="toolbar__btn circle"
@@ -37,7 +53,15 @@ const Toolbar = () => {
             />
             <button
                 className="toolbar__btn line"
-                onClick={() => toolState.setTool(new Line(canvasState.canvas))}
+                onClick={() =>
+                    toolState.setTool(
+                        new Line(
+                            canvasState.canvas,
+                            canvasState.socket,
+                            canvasState.sessionId
+                        )
+                    )
+                }
             />
             <input
                 onChange={changeColor}

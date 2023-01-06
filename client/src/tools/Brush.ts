@@ -18,7 +18,11 @@ export default class Brush extends Tool {
         this.mouseDown = false
         this.socket.send(
             JSON.stringify({
-                method: "finish",
+                method: "draw",
+                id: this.id,
+                figure: {
+                    type: "finish",
+                },
             })
         )
     }

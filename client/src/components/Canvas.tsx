@@ -59,12 +59,14 @@ const Canvas = () => {
                 Brush.draw(ctx, figure.x, figure.y)
                 break
             case "rect":
+                // TODO width, strokeStyle
                 Rect.staticDraw(
                     ctx,
                     figure.x,
                     figure.y,
                     figure.width,
-                    figure.height
+                    figure.height,
+                    figure.color
                 )
                 break
             case "finish":

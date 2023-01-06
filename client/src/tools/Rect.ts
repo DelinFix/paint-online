@@ -31,6 +31,16 @@ export default class Rect extends Tool {
                     y: this.startY,
                     width: this.width,
                     height: this.height,
+                    color: this.ctx?.fillStyle,
+                },
+            })
+        )
+        this.socket.send(
+            JSON.stringify({
+                method: "draw",
+                id: this.id,
+                figure: {
+                    type: "finish",
                 },
             })
         )
@@ -50,20 +60,7 @@ export default class Rect extends Tool {
             let currentY = e.offsetY
             this.width = currentX - this.startX
             this.height = currentY - this.startY
-            // this.draw(this.startX, this.startY, width, height)
-            this.socket.send(
-                JSON.stringify({
-                    method: "draw",
-                    id: this.id,
-                    figure: {
-                        type: "rect",
-                        x: currentX,
-                        y: currentX,
-                        width: this.width,
-                        height: this.height,
-                    },
-                })
-            )
+            this.draw(this.startX, this.startY, this.width, this.height)
         }
     }
 
@@ -90,12 +87,14 @@ export default class Rect extends Tool {
     }
 
     static staticDraw(
-        ctx: CanvasRenderingContext2D,
+        ctx: CanvasRenderingContext2D | null,
         x: number,
         y: number,
         w: number,
-        h: number
+        h: number,
+        color: string
     ) {
+        ctx!.fillStyle = color
         ctx?.beginPath()
         ctx?.rect(x, y, w, h)
         ctx?.fill()
